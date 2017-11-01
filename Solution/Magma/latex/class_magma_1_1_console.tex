@@ -1,0 +1,130 @@
+\hypertarget{class_magma_1_1_console}{}\section{Magma\+:\+:Console Class Reference}
+\label{class_magma_1_1_console}\index{Magma\+::\+Console@{Magma\+::\+Console}}
+
+
+Interface used to create a layer of abstraction between the multiple types of consoles. Default console type is \hyperlink{class_magma_1_1_null_console}{Null\+Console}.  
+
+
+
+
+{\ttfamily \#include $<$Console.\+hpp$>$}
+
+Inheritance diagram for Magma\+:\+:Console\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_magma_1_1_console}
+\end{center}
+\end{figure}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T $>$ }\\static void \hyperlink{class_magma_1_1_console_a378572ada79137830c60c52371fcc24e}{Set} ()
+\begin{DoxyCompactList}\small\item\em Sets the current console type \end{DoxyCompactList}\item 
+static void \hyperlink{class_magma_1_1_console_a86389ac097431a8c5a58b0afa5251a6b}{Print} (const std\+::string \&out)
+\begin{DoxyCompactList}\small\item\em Prints something to the console \end{DoxyCompactList}\item 
+static void \hyperlink{class_magma_1_1_console_aa8ab1a56c768f05eab042bf76c3447e2}{Print\+Ln} (const std\+::string \&out)
+\begin{DoxyCompactList}\small\item\em Prints a whole line to the console \end{DoxyCompactList}\item 
+static void \hyperlink{class_magma_1_1_console_afc79ad097b46bfcf38e9bcff89f3354d}{Read} (std\+::string \&in)
+\begin{DoxyCompactList}\small\item\em Reads something from the console \end{DoxyCompactList}\item 
+static void \hyperlink{class_magma_1_1_console_a984a8294955770ff171817e5e228a629}{Read\+Ln} (std\+::string \&in)
+\begin{DoxyCompactList}\small\item\em Reads a whole line from the console \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_magma_1_1_console_a93d5a4745230b85fb5e21c65a4bd1d4f}\label{class_magma_1_1_console_a93d5a4745230b85fb5e21c65a4bd1d4f}} 
+virtual void {\bfseries D\+Print} (const std\+::string \&out)=0
+\item 
+\mbox{\Hypertarget{class_magma_1_1_console_aed105d39eca3a64a54160835206e4a86}\label{class_magma_1_1_console_aed105d39eca3a64a54160835206e4a86}} 
+virtual void {\bfseries D\+Print\+Ln} (const std\+::string \&out)=0
+\item 
+\mbox{\Hypertarget{class_magma_1_1_console_aa36352b1816550648abee51ded18a33f}\label{class_magma_1_1_console_aa36352b1816550648abee51ded18a33f}} 
+virtual void {\bfseries D\+Read} (std\+::string \&in)=0
+\item 
+\mbox{\Hypertarget{class_magma_1_1_console_a6831d8a7f17a0e5a093f5b9ffd3d56bd}\label{class_magma_1_1_console_a6831d8a7f17a0e5a093f5b9ffd3d56bd}} 
+virtual void {\bfseries D\+Read\+Ln} (std\+::string \&in)=0
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Interface used to create a layer of abstraction between the multiple types of consoles. Default console type is \hyperlink{class_magma_1_1_null_console}{Null\+Console}. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_magma_1_1_console_a86389ac097431a8c5a58b0afa5251a6b}\label{class_magma_1_1_console_a86389ac097431a8c5a58b0afa5251a6b}} 
+\index{Magma\+::\+Console@{Magma\+::\+Console}!Print@{Print}}
+\index{Print@{Print}!Magma\+::\+Console@{Magma\+::\+Console}}
+\subsubsection{\texorpdfstring{Print()}{Print()}}
+{\footnotesize\ttfamily void Magma\+::\+Console\+::\+Print (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{out }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Prints something to the console 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out} & \hyperlink{class_magma_1_1_console}{Console} output string\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_magma_1_1_console_aa8ab1a56c768f05eab042bf76c3447e2}\label{class_magma_1_1_console_aa8ab1a56c768f05eab042bf76c3447e2}} 
+\index{Magma\+::\+Console@{Magma\+::\+Console}!Print\+Ln@{Print\+Ln}}
+\index{Print\+Ln@{Print\+Ln}!Magma\+::\+Console@{Magma\+::\+Console}}
+\subsubsection{\texorpdfstring{Print\+Ln()}{PrintLn()}}
+{\footnotesize\ttfamily void Magma\+::\+Console\+::\+Print\+Ln (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{out }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Prints a whole line to the console 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out} & \hyperlink{class_magma_1_1_console}{Console} output string\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_magma_1_1_console_afc79ad097b46bfcf38e9bcff89f3354d}\label{class_magma_1_1_console_afc79ad097b46bfcf38e9bcff89f3354d}} 
+\index{Magma\+::\+Console@{Magma\+::\+Console}!Read@{Read}}
+\index{Read@{Read}!Magma\+::\+Console@{Magma\+::\+Console}}
+\subsubsection{\texorpdfstring{Read()}{Read()}}
+{\footnotesize\ttfamily void Magma\+::\+Console\+::\+Read (\begin{DoxyParamCaption}\item[{std\+::string \&}]{in }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Reads something from the console 
+
+
+\begin{DoxyParams}{Parameters}
+{\em in} & \hyperlink{class_magma_1_1_console}{Console} input string\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_magma_1_1_console_a984a8294955770ff171817e5e228a629}\label{class_magma_1_1_console_a984a8294955770ff171817e5e228a629}} 
+\index{Magma\+::\+Console@{Magma\+::\+Console}!Read\+Ln@{Read\+Ln}}
+\index{Read\+Ln@{Read\+Ln}!Magma\+::\+Console@{Magma\+::\+Console}}
+\subsubsection{\texorpdfstring{Read\+Ln()}{ReadLn()}}
+{\footnotesize\ttfamily void Magma\+::\+Console\+::\+Read\+Ln (\begin{DoxyParamCaption}\item[{std\+::string \&}]{in }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Reads a whole line from the console 
+
+
+\begin{DoxyParams}{Parameters}
+{\em in} & \hyperlink{class_magma_1_1_console}{Console} input string\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_magma_1_1_console_a378572ada79137830c60c52371fcc24e}\label{class_magma_1_1_console_a378572ada79137830c60c52371fcc24e}} 
+\index{Magma\+::\+Console@{Magma\+::\+Console}!Set@{Set}}
+\index{Set@{Set}!Magma\+::\+Console@{Magma\+::\+Console}}
+\subsubsection{\texorpdfstring{Set()}{Set()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void Magma\+::\+Console\+::\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Sets the current console type 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Magma/\+Debug/Console.\+hpp\item 
+src/\+Magma/\+Debug/Console.\+cpp\end{DoxyCompactItemize}
