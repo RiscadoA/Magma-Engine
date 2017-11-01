@@ -15,7 +15,7 @@ Little open source engine I'm building on my free time.
 
 ### Achieved:
 
-Nothing yet :/
+* Nothing yet :/
 
 ## Authors
 
