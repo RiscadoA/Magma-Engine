@@ -14,6 +14,7 @@
 
 # Build results
 [Dd]ebug/
+!Solution/Magma/src/Magma/Debug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
