@@ -4,9 +4,7 @@ Little open source engine I'm building on my free time.
 
 ## Goals
 
-### To achieve
-
-Implement:
+### To achieve:
 
 * 3D graphics using OpenGL ([GLEW](https://github.com/nigels-com/glew) & [GLFW](https://github.com/glfw/glfw));
 * Game Object / Component system;
@@ -15,13 +13,13 @@ Implement:
 * Asset Conditioning Pipeline using [Assimp](https://github.com/assimp/assimp);
 * And many others...;
 
-### Achieved
+### Achieved:
 
 Nothing yet :/
 
 ## Authors
 
-* **Ricardo Antunes*** - [RiscadoA](https://github.com/RiscadoA)
+* **Ricardo Antunes** - [RiscadoA](https://github.com/RiscadoA)
 
 ## License
 
