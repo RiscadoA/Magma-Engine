@@ -4,18 +4,12 @@ Little open source engine I'm building on my free time.
 
 ## Goals
 
-### To achieve:
-
 * 3D graphics using OpenGL ([GLEW](https://github.com/nigels-com/glew) & [GLFW](https://github.com/glfw/glfw));
 * Game Object / Component system;
 * External console for debugging;
 * Physics using [Bullet Physics](https://github.com/bulletphysics/bullet3);
 * Asset Conditioning Pipeline using [Assimp](https://github.com/assimp/assimp);
 * And many others...;
-
-### Achieved:
-
-* Nothing yet :/
 
 ## Authors
 
