@@ -8,10 +8,6 @@ int main(int argc, char** argv)
 {
 	Console::Init<WindowsConsole>();
 
-	std::cout << "AA" << std::endl;
-
-	MAGMA_ERROR("Ai!");
-
 	while (true)
 	{
 		std::string str = Console::Read();
