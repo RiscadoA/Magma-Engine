@@ -10,10 +10,11 @@ int main(int argc, char** argv)
 
 	while (true)
 	{
-		std::string str = Console::Read();
+		std::string str;
+		std::getline(std::cin, str);
 		if (str == "exit")
 			break;
-		Console::PrintLn(str);
+		std::cout << "\"" << str << "\"" << std::endl;
 	}
 
 	return 0;

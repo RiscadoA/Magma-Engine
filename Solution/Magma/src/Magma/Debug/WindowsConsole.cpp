@@ -117,7 +117,7 @@ void Magma::WindowsConsole::InputThread()
 	{
 		DWORD dwRead;
 
-		char c[1025];
+		char c[1026];
 
 		bool flg = ReadFile(m_sendPipe,
 							c,
@@ -130,7 +130,12 @@ void Magma::WindowsConsole::InputThread()
 
 		if (dwRead != 0)
 		{
-			c[dwRead] = '\0';
+			if (c[dwRead - 1] != '\n')
+			{
+				c[dwRead] = '\n';
+				c[dwRead + 1] = '\0';
+			}
+			else c[dwRead] = '\0';
 			s_callbackMutex.lock();
 			for (auto& callback : s_callback)
 				callback.second(c);

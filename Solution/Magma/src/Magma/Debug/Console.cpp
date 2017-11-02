@@ -28,14 +28,14 @@ Magma::Console::ConsoleHandle& Magma::Console::ConsoleHandle::operator=(Console 
 	return *this;
 }
 
-class functionbuf
+class ofunctionbuf
 	: public std::streambuf
 {
 private:
 	typedef std::streambuf::traits_type traits_type;
 	std::function<void(const std::string&)> d_function;
 	char        d_buffer[1024];
-	int overflow(int c)
+	virtual int overflow(int c) override
 	{
 		if (!traits_type::eq_int_type(c, traits_type::eof()))
 		{
@@ -44,7 +44,7 @@ private:
 		}
 		return this->sync() ? traits_type::not_eof(c) : traits_type::eof();
 	}
-	int sync()
+	virtual int sync() override
 	{
 		if (this->pbase() != this->pptr())
 		{
@@ -54,7 +54,7 @@ private:
 		return 0;
 	}
 public:
-	functionbuf(std::function<void(const std::string&)> const& function)
+	ofunctionbuf(std::function<void(const std::string&)> const& function)
 		: d_function(function)
 	{
 		this->setp(this->d_buffer, this->d_buffer + sizeof(this->d_buffer) - 1);
@@ -62,13 +62,67 @@ public:
 };
 
 class ofunctionstream
-	: private virtual functionbuf
+	: private virtual ofunctionbuf
 	, public std::ostream
 {
 public:
 	ofunctionstream(std::function<void(const std::string&)> const& function)
-		: functionbuf(function)
+		: ofunctionbuf(function)
 		, std::ostream(static_cast<std::streambuf*>(this))
+	{
+		this->flags(std::ios_base::unitbuf);
+	}
+};
+
+class ifunctionbuf
+	: public std::streambuf
+{
+private:
+	typedef std::streambuf::traits_type traits_type;
+	std::function<void(std::string&)> d_function;
+	char        d_buffer[1024];
+	virtual int underflow() override
+	{
+		if (gptr() < egptr())
+			return traits_type::to_int_type(*gptr());
+
+		auto a = gptr();
+		auto b = egptr();
+
+		std::string str;
+		d_function(str);
+		if (str.empty())
+			return traits_type::eof();
+		
+		std::memcpy(d_buffer, str.c_str(), str.size());
+		if (d_buffer[str.size() - 1] != '\n')
+		{
+			d_buffer[str.size()] = ' ';
+			setg(d_buffer, d_buffer, d_buffer + str.size() + 1);
+		}
+		else
+		{
+			setg(d_buffer, d_buffer, d_buffer + str.size());
+		}
+
+		return traits_type::to_int_type(*gptr());
+	}
+public:
+	ifunctionbuf(std::function<void(std::string&)> const& function)
+		: d_function(function)
+	{
+		this->setg(this->d_buffer, this->d_buffer, this->d_buffer);
+	}
+};
+
+class ifunctionstream
+	: private virtual ifunctionbuf
+	, public std::istream
+{
+public:
+	ifunctionstream(std::function<void(std::string&)> const& function)
+		: ifunctionbuf(function)
+		, std::istream(static_cast<std::streambuf*>(this))
 	{
 		this->flags(std::ios_base::unitbuf);
 	}
@@ -100,6 +154,11 @@ Magma::Console::Console()
 
 	oldBufERR = std::cerr.rdbuf();
 	std::cerr.rdbuf(newOS->rdbuf());
+
+	// Redirect std::cin to console
+	newIS = new ifunctionstream(Console::Read);
+	oldIBuf = std::cin.rdbuf();
+	std::cin.rdbuf(newIS->rdbuf());
 }
 
 Magma::Console::~Console()

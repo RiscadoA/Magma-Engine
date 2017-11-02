@@ -34,7 +34,6 @@ namespace Magma
 
 		inline static void Print(const std::string& text) { s_activeConsole.m_console->DPrint(text); }
 		inline static void PrintLn(const std::string& text) { s_activeConsole.m_console->DPrintLn(text); }
-		inline static std::string Read() { std::string str = ""; Read(str); return str; }
 		static void Read(std::string& text);
 		inline static void Clear() { s_activeConsole.m_console->DClear(); }
 
@@ -56,6 +55,8 @@ namespace Magma
 		std::streambuf* oldBuf;
 		std::ostream* newOS;
 		std::streambuf* oldBufERR;
+		std::streambuf* oldIBuf;
+		std::istream* newIS;
 
 		static std::mutex s_readMutex;
 		static std::atomic<bool> s_read;
