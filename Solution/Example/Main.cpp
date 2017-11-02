@@ -1,20 +1,24 @@
 #include <iostream>
 
-#include <Magma\Debug\Console.hpp>
+#include <Magma\Debug\WindowsConsole.hpp>
 
 using namespace Magma;
 
 int main(int argc, char** argv)
 {
-	Console::Set<STDConsole>();
+	Console::Init<WindowsConsole>();
 
-	std::string name;
+	std::cout << "AA" << std::endl;
 
-	Console::PrintLn("Enter your name: ");
-	Console::ReadLn(name);
+	MAGMA_ERROR("Ai!");
 
-	Console::PrintLn("Hi " + name + "!");
-	Console::Read(std::string());
+	while (true)
+	{
+		std::string str = Console::Read();
+		if (str == "exit")
+			break;
+		Console::PrintLn(str);
+	}
 
 	return 0;
 }

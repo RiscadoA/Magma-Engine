@@ -1,86 +1,90 @@
 #pragma once
 
+#include "..\Utils\Utils.hpp"
+
 #include <string>
+#include <functional>
+#include <map>
+#include <mutex>
+#include <atomic>
+#include <sstream>
 
 namespace Magma
 {
 	/// <summary>
-	///		Interface used to create a layer of abstraction between the multiple types of consoles.
-	///		Default console type is NullConsole.
+	///		Class used as an interface to implement consoles
 	/// </summary>
 	class Console
 	{
 	public:
-		/// <summary>
-		///		Sets the current console type
-		/// </summary>
 		template <typename T>
-		static void Set();
+		static void Init() { delete s_activeConsole.m_console; s_activeConsole.m_console = new T(); }
+		static void Terminate();
 
-		/// <summary>
-		///		Prints something to the console
-		/// </summary>
-		/// <param name="out">Console output string</param>
-		static void Print(const std::string& out);
+		inline static std::uint64_t AddInputCallback(std::function<void(const std::string&)> callback)
+		{
+			s_callbackMutex.lock(); s_callback[s_nextCallbackID++] = callback; s_callbackMutex.unlock();
+			return s_nextCallbackID - 1;
+		}
 
-		/// <summary>
-		///		Prints a whole line to the console
-		/// </summary>
-		/// <param name="out">Console output string</param>
-		static void PrintLn(const std::string& out);
+		inline static void RemoveInputCallback(std::uint64_t id)
+		{
+			s_callbackMutex.lock(); s_callback.erase(id); s_callbackMutex.unlock();
+		}
 
-		/// <summary>
-		///		Reads something from the console
-		/// </summary>
-		/// <param name="in">Console input string</param>
-		static void Read(std::string& in);
-
-		/// <summary>
-		///		Reads a whole line from the console
-		/// </summary>
-		/// <param name="in">Console input string</param>
-		static void ReadLn(std::string& in);
+		inline static void Print(const std::string& text) { s_activeConsole.m_console->DPrint(text); }
+		inline static void PrintLn(const std::string& text) { s_activeConsole.m_console->DPrintLn(text); }
+		inline static std::string Read() { std::string str = ""; Read(str); return str; }
+		static void Read(std::string& text);
+		inline static void Clear() { s_activeConsole.m_console->DClear(); }
 
 	protected:
-		Console() = default;
-		virtual ~Console() = default;
+		Console();
+		virtual ~Console();
 
-		virtual void DPrint(const std::string& out) = 0;
-		virtual void DPrintLn(const std::string& out) = 0;
-		virtual void DRead(std::string& in) = 0;
-		virtual void DReadLn(std::string& in) = 0;
+		static std::map<std::uint64_t, std::function<void(const std::string&)>> s_callback;
+		static std::uint64_t s_nextCallbackID;
+		static std::mutex s_callbackMutex;
+
+		virtual void DPrint(const std::string& text) = 0;
+		virtual void DPrintLn(const std::string& text) = 0;
+		virtual void DClear() = 0;
 
 	private:
-		static Console* s_activeConsole;
+		static void InputCallback(const std::string& text);
+
+		std::streambuf* oldBuf;
+		std::ostream* newOS;
+		std::streambuf* oldBufERR;
+
+		static std::mutex s_readMutex;
+		static std::atomic<bool> s_read;
+		static std::atomic<bool> s_reading;
+		static std::string s_textRead;
+
+		class ConsoleHandle
+		{
+		public:
+			ConsoleHandle(Console* console);
+			~ConsoleHandle();
+
+			ConsoleHandle& operator=(Console* console);
+
+			Console* m_console;
+		};
+
+		static ConsoleHandle s_activeConsole;
 	};
 
 	/// <summary>
-	///		Null Console implementation
+	///		Null implementation of Console interface
 	/// </summary>
-	class NullConsole final : public Console
+	class NullConsole : public Console
 	{
-		inline virtual void DPrint(const std::string& out) final {};
-		inline virtual void DPrintLn(const std::string& out) final {};
-		inline virtual void DRead(std::string& in) final {};
-		inline virtual void DReadLn(std::string& in) final {};
+	public:
+		// Inherited via Console
+		virtual void DPrint(const std::string & text) final {}
+		virtual void DPrintLn(const std::string & text) final {}
+		virtual void DClear() final {}
 	};
-
-	/// <summary>
-	///		Standard Console implementation (using C++ standard library)
-	/// </summary>
-	class STDConsole final : public Console
-	{
-		virtual void DPrint(const std::string& out) final;
-		virtual void DPrintLn(const std::string& out) final;
-		virtual void DRead(std::string& in) final;
-		virtual void DReadLn(std::string& in) final;
-	};
-
-	template<typename T>
-	inline void Console::Set()
-	{
-		if (s_activeConsole != nullptr)
-			delete s_activeConsole;
-		s_activeConsole = new T();
-	}
 }
