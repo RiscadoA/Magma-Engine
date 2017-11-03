@@ -24,23 +24,11 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.outputText = new System.Windows.Forms.TextBox();
             this.inputText = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.outputText = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
-            // 
-            // outputText
-            // 
-            this.outputText.Cursor = System.Windows.Forms.Cursors.Default;
-            this.outputText.Location = new System.Drawing.Point(12, 12);
-            this.outputText.MaxLength = 1000000000;
-            this.outputText.Multiline = true;
-            this.outputText.Name = "outputText";
-            this.outputText.ReadOnly = true;
-            this.outputText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.outputText.Size = new System.Drawing.Size(610, 291);
-            this.outputText.TabIndex = 0;
             // 
             // inputText
             // 
@@ -69,16 +57,26 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // outputText
+            // 
+            this.outputText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.outputText.Location = new System.Drawing.Point(13, 13);
+            this.outputText.Name = "outputText";
+            this.outputText.ReadOnly = true;
+            this.outputText.Size = new System.Drawing.Size(609, 290);
+            this.outputText.TabIndex = 4;
+            this.outputText.Text = "";
+            // 
             // Form1
             // 
             this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(634, 343);
+            this.Controls.Add(this.outputText);
             this.Controls.Add(this.inputText);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.outputText);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -92,11 +90,10 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox outputText;
         private System.Windows.Forms.TextBox inputText;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.RichTextBox outputText;
     }
 }
 

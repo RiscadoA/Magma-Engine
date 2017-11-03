@@ -9,7 +9,7 @@ Little open source engine I'm building on my free time.
 * External console for debugging;
 * Physics using [Bullet Physics](https://github.com/bulletphysics/bullet3);
 * Asset Conditioning Pipeline using [Assimp](https://github.com/assimp/assimp);
-* And many others...;
+* And many others...
 
 ## Authors
 

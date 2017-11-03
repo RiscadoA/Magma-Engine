@@ -14,6 +14,8 @@ int main(int argc, char** argv)
 		std::getline(std::cin, str);
 		if (str == "exit")
 			break;
+		else
+			MAGMA_ERROR("Unknown command \"" + str + "\"");
 		std::cout << "\"" << str << "\"" << std::endl;
 	}
 

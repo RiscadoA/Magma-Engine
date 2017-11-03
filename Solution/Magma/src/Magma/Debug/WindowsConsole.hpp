@@ -21,6 +21,7 @@ namespace Magma
 		// Inherited via Console
 		virtual void DPrint(const std::string & text) final;
 		virtual void DPrintLn(const std::string & text) final;
+		virtual void DError(const std::string& text) final;
 		virtual void DClear() final;
 		void Send(const std::string& command);
 

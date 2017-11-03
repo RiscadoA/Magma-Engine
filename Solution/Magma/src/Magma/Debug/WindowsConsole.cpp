@@ -89,6 +89,11 @@ void Magma::WindowsConsole::DPrintLn(const std::string & text)
 	DPrint(text + "\n\r");
 }
 
+void Magma::WindowsConsole::DError(const std::string & text)
+{
+	Send("error " + text);
+}
+
 void Magma::WindowsConsole::DClear()
 {
 	Send("clear");

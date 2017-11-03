@@ -15,6 +15,8 @@ namespace Console {
         private NamedPipeClientStream client;
         private NamedPipeServerStream server;
         private StreamWriter writer;
+        private Color defaultTextColor;
+        private Color errorTextColor = Color.Red;
 
         private const int CP_NOCLOSE_BUTTON = 0x200;
         protected override CreateParams CreateParams {
@@ -32,6 +34,8 @@ namespace Console {
         private void Form1_Load(object sender, EventArgs e) {
             server = new NamedPipeServerStream("Magma_Console_Pipe_Send", PipeDirection.Out);
             client = new NamedPipeClientStream(".", "Magma_Console_Pipe_Read", PipeDirection.In);
+
+            defaultTextColor = outputText.ForeColor;
 
             try {
                 client.Connect(2000);
@@ -67,7 +71,11 @@ namespace Console {
         }
 
         public void Print(string text) {
-            outputText.AppendText(text.Replace("\n", Environment.NewLine));
+            outputText.AppendText(text.Replace("\n", Environment.NewLine), defaultTextColor);
+        }
+
+        public void Error(string text) {
+            outputText.AppendText(text.Replace("\n", Environment.NewLine), errorTextColor);
         }
 
         public void Execute(string text) {
@@ -76,8 +84,8 @@ namespace Console {
             if (String.IsNullOrWhiteSpace(str))
                 return;
             if (!outputText.Text.EndsWith(Environment.NewLine))
-                Print(Environment.NewLine);
-            Print("> " + str + Environment.NewLine);
+                Print("\n");
+            Print("> " + str + "\n");
             Send(str);
         }
 
@@ -137,12 +145,25 @@ namespace Console {
                             this.Clear();
                         else if (str.Length >= 5 && str.Substring(0, 5) == "print")
                             Print(str.Substring(6));
-                        else Print("UNKNOWN MSG RECEIVED \"" + str + "\"" + Environment.NewLine);
+                        else if (str.Length >= 5 && str.Substring(0, 5) == "error")
+                            Error(str.Substring(6));
+                        else Error(Environment.NewLine + "UNKNOWN MSG RECEIVED \"" + str + "\"" + Environment.NewLine);
                     }
                 }
             }
 
             this.Read();
         }
+    }
+}
+
+public static class RichTextBoxExtensions {
+    public static void AppendText(this RichTextBox box, string text, Color color) {
+        box.SelectionStart = box.TextLength;
+        box.SelectionLength = 0;
+
+        box.SelectionColor = color;
+        box.AppendText(text);
+        box.SelectionColor = box.ForeColor;
     }
 }

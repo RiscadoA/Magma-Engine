@@ -86,9 +86,6 @@ private:
 		if (gptr() < egptr())
 			return traits_type::to_int_type(*gptr());
 
-		auto a = gptr();
-		auto b = egptr();
-
 		std::string str;
 		d_function(str);
 		if (str.empty())
@@ -152,8 +149,9 @@ Magma::Console::Console()
 	oldBuf = std::cout.rdbuf();
 	std::cout.rdbuf(newOS->rdbuf());
 
+	newERROS = new ofunctionstream(Console::Error);
 	oldBufERR = std::cerr.rdbuf();
-	std::cerr.rdbuf(newOS->rdbuf());
+	std::cerr.rdbuf(newERROS->rdbuf());
 
 	// Redirect std::cin to console
 	newIS = new ifunctionstream(Console::Read);
@@ -165,6 +163,7 @@ Magma::Console::~Console()
 {
 	std::cout.rdbuf(oldBuf);
 	std::cerr.rdbuf(oldBufERR);
+	std::cin.rdbuf(oldIBuf);
 
 	delete newOS;
 }
