@@ -35,6 +35,7 @@ namespace Magma
 		inline static void Print(const std::string& text) { s_activeConsole.m_console->DPrint(text); }
 		inline static void PrintLn(const std::string& text) { s_activeConsole.m_console->DPrintLn(text); }
 		inline static void Error(const std::string& text) { s_activeConsole.m_console->DError(text); }
+		inline static void Warning(const std::string& text) { s_activeConsole.m_console->DWarning(text); }
 		static void Read(std::string& text);
 		inline static void Clear() { s_activeConsole.m_console->DClear(); }
 
@@ -49,6 +50,7 @@ namespace Magma
 		virtual void DPrint(const std::string& text) = 0;
 		virtual void DPrintLn(const std::string& text) = 0;
 		virtual void DError(const std::string& text) = 0;
+		virtual void DWarning(const std::string& text) = 0;
 		virtual void DClear() = 0;
 
 	private:
@@ -58,6 +60,8 @@ namespace Magma
 		std::ostream* newOS;
 		std::streambuf* oldBufERR;
 		std::ostream* newERROS;
+		std::streambuf* oldBufLOG;
+		std::ostream* newLOGOS;
 		std::streambuf* oldIBuf;
 		std::istream* newIS;
 
@@ -90,6 +94,7 @@ namespace Magma
 		inline virtual void DPrint(const std::string & text) final {}
 		inline virtual void DPrintLn(const std::string & text) final {}
 		inline virtual void DError(const std::string& text) final {};
+		inline virtual void DWarning(const std::string& text) final {};
 		inline virtual void DClear() final {}
 	};
 }

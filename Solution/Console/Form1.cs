@@ -17,6 +17,7 @@ namespace Console {
         private StreamWriter writer;
         private Color defaultTextColor;
         private Color errorTextColor = Color.Red;
+        private Color warningTextColor = Color.DarkOrange;
 
         private const int CP_NOCLOSE_BUTTON = 0x200;
         protected override CreateParams CreateParams {
@@ -76,6 +77,10 @@ namespace Console {
 
         public void Error(string text) {
             outputText.AppendText(text.Replace("\n", Environment.NewLine), errorTextColor);
+        }
+
+        public void Warning(string text) {
+            outputText.AppendText(text.Replace("\n", Environment.NewLine), warningTextColor);
         }
 
         public void Execute(string text) {
@@ -147,6 +152,8 @@ namespace Console {
                             Print(str.Substring(6));
                         else if (str.Length >= 5 && str.Substring(0, 5) == "error")
                             Error(str.Substring(6));
+                        else if (str.Length >= 5 && str.Substring(0, 5) == "warng")
+                            Warning(str.Substring(6));
                         else Error(Environment.NewLine + "UNKNOWN MSG RECEIVED \"" + str + "\"" + Environment.NewLine);
                     }
                 }

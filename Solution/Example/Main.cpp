@@ -15,8 +15,8 @@ int main(int argc, char** argv)
 		if (str == "exit")
 			break;
 		else
-			MAGMA_ERROR("Unknown command \"" + str + "\"");
-		std::cout << "\"" << str << "\"" << std::endl;
+			MAGMA_WARNING("Unknown command \"" + str + "\"");
+		std::cout << "Received \"" << str << "\"" << std::endl;
 	}
 
 	return 0;

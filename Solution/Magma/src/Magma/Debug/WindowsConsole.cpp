@@ -94,6 +94,11 @@ void Magma::WindowsConsole::DError(const std::string & text)
 	Send("error " + text);
 }
 
+void Magma::WindowsConsole::DWarning(const std::string & text)
+{
+	Send("warng " + text);
+}
+
 void Magma::WindowsConsole::DClear()
 {
 	Send("clear");

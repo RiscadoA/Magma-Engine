@@ -144,7 +144,7 @@ void Magma::Console::Read(std::string & text)
 
 Magma::Console::Console()
 {
-	// Redirect std::cout and std::cerr to console
+	// Redirect std::cout, std::cerr and std::clog to console
 	newOS = new ofunctionstream(Console::Print);
 	oldBuf = std::cout.rdbuf();
 	std::cout.rdbuf(newOS->rdbuf());
@@ -152,6 +152,10 @@ Magma::Console::Console()
 	newERROS = new ofunctionstream(Console::Error);
 	oldBufERR = std::cerr.rdbuf();
 	std::cerr.rdbuf(newERROS->rdbuf());
+
+	newLOGOS = new ofunctionstream(Console::Warning);
+	oldBufLOG = std::clog.rdbuf();
+	std::clog.rdbuf(newLOGOS->rdbuf());
 
 	// Redirect std::cin to console
 	newIS = new ifunctionstream(Console::Read);
@@ -163,6 +167,7 @@ Magma::Console::~Console()
 {
 	std::cout.rdbuf(oldBuf);
 	std::cerr.rdbuf(oldBufERR);
+	std::clog.rdbuf(oldBufLOG);
 	std::cin.rdbuf(oldIBuf);
 
 	delete newOS;
