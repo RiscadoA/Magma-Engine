@@ -21,6 +21,9 @@
   <ItemGroup>
     <ClInclude Include="src\Magma\Debug\Console.hpp" />
     <ClInclude Include="src\Magma\Debug\WindowsConsole.hpp" />
+    <ClInclude Include="src\Magma\Math\Matrix.hpp" />
+    <ClInclude Include="src\Magma\Math\Transformation.hpp" />
+    <ClInclude Include="src\Magma\Utils\Serializable.hpp" />
     <ClInclude Include="src\Magma\Utils\Utils.hpp" />
   </ItemGroup>
   <ItemGroup>

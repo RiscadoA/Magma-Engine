@@ -7,6 +7,9 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{39c3f35f-98f3-4450-8072-d3a5f9563fd7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{9bbb82c0-5993-4ad7-88a9-783d0cd8b7ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Magma\Utils\Utils.hpp">
@@ -17,6 +20,15 @@
     </ClInclude>
     <ClInclude Include="src\Magma\Debug\WindowsConsole.hpp">
       <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Magma\Math\Transformation.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Magma\Math\Matrix.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Magma\Utils\Serializable.hpp">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

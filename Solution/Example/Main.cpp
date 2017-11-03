@@ -2,6 +2,8 @@
 
 #include <Magma\Debug\WindowsConsole.hpp>
 
+
+
 using namespace Magma;
 
 int main(int argc, char** argv)
