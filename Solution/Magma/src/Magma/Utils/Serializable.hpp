@@ -13,8 +13,8 @@ namespace Magma
 		/// <summary>
 		///		Serializes this object into a stream
 		/// </summary>
-		/// <param name="ostream">Stream where the object will be serialized to</param>
-		virtual void Serialize(std::ostream& ostream) const = 0;
+		/// <param name="stream">Stream where the object will be serialized to</param>
+		virtual void Serialize(std::ostream& stream) const = 0;
 
 		/// <summary>
 		///		Deserializes this object from a stream
