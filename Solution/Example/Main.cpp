@@ -1,7 +1,9 @@
 #include <iostream>
 
 #include <Magma\Debug\WindowsConsole.hpp>
-#include <Magma\Math\Matrix.hpp>
+#include <Magma\Utils\Math.hpp>
+
+#include <algorithm>
 
 using namespace Magma;
 
@@ -9,14 +11,12 @@ int main(int argc, char** argv)
 {
 	Console::Init<WindowsConsole>();
 
-	Matrix2x2 mat;
-
-	std::cout << mat << std::endl;
-
 	while (true)
 	{
 		std::string str;
 		std::getline(std::cin, str);
+		if (str.empty())
+			continue;
 		if (str == "exit")
 			break;
 		else
