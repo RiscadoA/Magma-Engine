@@ -7,6 +7,12 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{39c3f35f-98f3-4450-8072-d3a5f9563fd7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Systems">
+      <UniqueIdentifier>{de723f54-0067-48f4-a8a3-1386e49bf8a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Terminal">
+      <UniqueIdentifier>{6912e674-ce20-422f-aaa3-15ee68284af2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Magma\Utils\Utils.hpp">
@@ -24,6 +30,12 @@
     <ClInclude Include="src\Magma\Utils\Math.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\Magma\Systems\Terminal\Terminal.hpp">
+      <Filter>Systems\Terminal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Magma\Systems\MessageBus.hpp">
+      <Filter>Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Magma\Utils\Utils.cpp">
@@ -34,6 +46,9 @@
     </ClCompile>
     <ClCompile Include="src\Magma\Debug\WindowsConsole.cpp">
       <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Magma\Systems\MessageBus.cpp">
+      <Filter>Systems</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
