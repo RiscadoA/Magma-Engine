@@ -11,14 +11,6 @@
 
 using namespace Magma;
 
-class IntMessage : public Message
-{
-public:
-	IntMessage(int value) : m_value(value) {}
-
-	int m_value;
-};
-
 int main(int argc, char** argv)
 {
 	Console::Init<WindowsConsole>();
