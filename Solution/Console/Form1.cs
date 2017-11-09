@@ -88,8 +88,6 @@ namespace Console {
             inputText.Text = "";
             if (String.IsNullOrWhiteSpace(str))
                 return;
-            if (!outputText.Text.EndsWith(Environment.NewLine))
-                Print("\n");
             Print("> " + str + "\n");
             Send(str);
         }

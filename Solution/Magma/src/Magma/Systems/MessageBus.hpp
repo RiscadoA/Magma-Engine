@@ -7,15 +7,17 @@
 #include <memory>
 #include <set>
 #include <vector>
+#include <iostream>
 
 #include "..\Utils\Utils.hpp"
+#include "..\Utils\Serializable.hpp"
 
 namespace Magma
 {
 	/// <summary>
 	///		Class used as packet of data to be sent to the message listeners
 	/// </summary>
-	struct Message
+	class Message : public Serializable
 	{
 	public:
 		/// <summary>
@@ -56,9 +58,18 @@ namespace Magma
 		/// <returns>Number of references this message has</returns>
 		inline size_t GetReferenceCount() { return m_refCount; }
 
+		/// <summary>
+		///		Creates a message of a certain type from a stream
+		/// </summary>
+		/// <param name="typeName">Message type name</param>
+		/// <param name="location">Message location</param>
+		/// <param name="is">Stream</param>
+		/// <returns>New message</returns>
+		static Message* Create(const std::string& typeName, void* location, std::istream& is);
+
 	protected:
-		inline Message() = default;
-		inline virtual ~Message() = default;
+		Message() = default;
+		virtual ~Message() = default;
 
 	private:
 		friend class MessageHandle;
@@ -80,6 +91,7 @@ namespace Magma
 		inline MessageHandle(const MessageHandle& other) : m_message(other.m_message) { if (m_message != nullptr) ++m_message->m_refCount; }
 		inline ~MessageHandle() { if (m_message != nullptr) --m_message->m_refCount; }
 		inline Message* operator->() { return m_message; }
+		inline Message& operator*() { return *m_message; }
 		inline bool operator==(MessageHandle& other) { return m_message == other.m_message; }
 		inline bool operator==(void* other) { return static_cast<void*>(m_message) == other; }
 		inline operator bool() { return m_message != nullptr; }
@@ -200,6 +212,22 @@ namespace Magma
 		void SendMessage(const std::string& type, Args ... args);
 
 		/// <summary>
+		///		Sends a message of a certain type to message listeners, creating it from a stream
+		/// </summary>
+		/// <param name="type">Message type</param>
+		/// <param name="typeName">Message data type</param>
+		/// <param name="is">Stream from which the message will be extracted</param>
+		void SendMessage(size_t type, const std::string& typeName, std::istream& is);
+
+		/// <summary>
+		///		Sends a message of a certain type to message listeners, creating it from a stream
+		/// </summary>
+		/// <param name="type">Message type</param>
+		/// <param name="typeName">Message data type</param>
+		/// <param name="is">Stream from which the message will be extracted</param>
+		inline void SendMessage(const std::string& type, const std::string& typeName, std::istream& is) { SendMessage(Message::TypeNameToTypeID(type), typeName, is); }
+
+		/// <summary>
 		///		Cleans messages without references
 		/// </summary>
 		void Clean();
@@ -254,4 +282,125 @@ namespace Magma
 	{
 		this->SendMessage<T, Args...>(Message::TypeNameToTypeID(type), args...);
 	}
+
+	namespace Messaging
+	{
+		namespace Detail
+		{
+			using CreateRegistrableFunc = Message*(*)(void* loc);
+			using RegistrableRegistry = std::map<std::string, CreateRegistrableFunc>;
+
+			inline RegistrableRegistry& GetRegistrableRegistry()
+			{
+				static RegistrableRegistry reg;
+				return reg;
+			}
+
+			template <class T>
+			Message* CreateRegistrable(void* loc) { return new (loc) T(); }
+
+			template <class T>
+			struct RegistryEntry
+			{
+			public:
+				static RegistryEntry<T>& Instance(const std::string& typeName)
+				{
+					static RegistryEntry<T> inst(typeName);
+					return inst;
+				}
+
+			private:
+				RegistryEntry(const std::string& typeName)
+				{
+					RegistrableRegistry& reg = GetRegistrableRegistry();
+					CreateRegistrableFunc func = CreateRegistrable<T>;
+
+					std::pair<RegistrableRegistry::iterator, bool> ret = reg.insert(RegistrableRegistry::value_type(typeName, func));
+
+					if (ret.second == false)
+					{
+						// Registrable already registered with this name
+						MAGMA_WARNING("Failed to register entry, there is already another entry with the same name (\"" + typeName + "\")");
+					}
+				}
+
+				RegistryEntry(const RegistryEntry<T>&) = delete;
+				RegistryEntry& operator=(const RegistryEntry<T>&) = delete;
+			};
+		}
+	}
+
+	/// <summary>
+	///		Registers a message data type with the chosen name, so it can later be created with Message::Create
+	/// </summary>
+	/// <param name="TYPE">Message data type</param>
+	/// <param name="NAME">Message data type name</param>
+#define MAGMA_REGISTER_MESSAGE(TYPE, NAME) \
+	namespace Messaging {\
+	namespace Detail { \
+	namespace { \
+		template <class T> \
+		class RegistrableRegistration; \
+		\
+		template <> \
+		class RegistrableRegistration<TYPE> { \
+			static const ::Magma::Messaging::Detail::RegistryEntry<TYPE>& reg; \
+		}; \
+		\
+		const ::Magma::Messaging::Detail::RegistryEntry<TYPE>& \
+			RegistrableRegistration<TYPE>::reg = \
+				::Magma::Messaging::Detail::RegistryEntry<TYPE>::Instance(NAME); \
+	}}}
+
+	// Basic message types
+	/// <summary>
+	///		Empty message
+	/// </summary>
+	class EmptyMessage final : public Message
+	{
+	private:
+		// Inherited via Message
+		inline virtual void Serialize(std::ostream & stream) const {};
+		inline virtual void Deserialize(std::istream & stream) {};
+	};
+	MAGMA_REGISTER_MESSAGE(EmptyMessage, "empty");
+	/// <summary>
+	///		Message containing 64bit integer
+	/// </summary>
+	class IntMessage final : public Message
+	{
+	public:
+		int64_t m_value;
+	private:
+		// Inherited via Message
+		inline virtual void Serialize(std::ostream & stream) const { stream << m_value; };
+		inline virtual void Deserialize(std::istream & stream) { stream >> m_value; };
+	};
+	MAGMA_REGISTER_MESSAGE(IntMessage, "int");
+	/// <summary>
+	///		Message containing 64bit floating point number
+	/// </summary>
+	class RealMessage final : public Message
+	{
+	public:
+		double m_value;
+	private:
+		// Inherited via Message
+		inline virtual void Serialize(std::ostream & stream) const { stream << m_value; };
+		inline virtual void Deserialize(std::istream & stream) { stream >> m_value; };
+	};
+	MAGMA_REGISTER_MESSAGE(RealMessage, "real");
+	/// <summary>
+	///		Message containing string
+	/// </summary>
+	class StringMessage final : public Message
+	{
+	public:
+		std::string m_value;
+	private:
+		// Inherited via Message
+		virtual void Serialize(std::ostream & stream) const final;
+		virtual void Deserialize(std::istream & stream) final;
+	};
+	MAGMA_REGISTER_MESSAGE(StringMessage, "string");
 }

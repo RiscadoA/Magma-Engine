@@ -140,12 +140,8 @@ void Magma::WindowsConsole::InputThread()
 
 		if (dwRead != 0)
 		{
-			if (c[dwRead - 1] != '\n')
-			{
-				c[dwRead] = '\n';
-				c[dwRead + 1] = '\0';
-			}
-			else c[dwRead] = '\0';
+			c[dwRead] = '\n';
+			c[dwRead + 1] = '\0';
 			s_callbackMutex.lock();
 			for (auto& callback : s_callback)
 				callback.second(c);

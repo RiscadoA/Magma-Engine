@@ -5,20 +5,21 @@
 namespace Magma
 {
 	/// <summary>
-	///		Terminal system.
-	///		Reads commands from the console and executes them.
+	///		Engine core system.
+	///		Handles primary stuff such as engine exit.
 	/// </summary>
-	class Terminal : public MessageListener
+	class Core : public MessageListener
 	{
 	public:
 		void Update();
-		void OnInput(const std::string& in);
+		
+		inline bool IsRunning() { return m_running; }
 
 	private:
-		std::uint64_t m_iCallback;
-
 		// Inherited via MessageListener
 		virtual void DerivedInit() override;
 		virtual void DerivedTerminate() override;
+
+		std::atomic<bool> m_running;
 	};
 }

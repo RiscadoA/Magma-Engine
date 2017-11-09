@@ -27,6 +27,20 @@ size_t Magma::Message::TypeNameToTypeID(const std::string & type)
 	return it->second;
 }
 
+Magma::Message* Magma::Message::Create(const std::string& typeName, void* location, std::istream& is)
+{
+	::Magma::Messaging::Detail::RegistrableRegistry& reg = ::Magma::Messaging::Detail::GetRegistrableRegistry();
+	::Magma::Messaging::Detail::RegistrableRegistry::iterator it = reg.find(typeName);
+
+	if (it == reg.end())
+		return nullptr; // No registrable was registred with this name
+
+	::Magma::Messaging::Detail::CreateRegistrableFunc func = it->second;
+	auto msg = func(location);
+	is >> *msg;
+	return msg;
+}
+
 Magma::MessageListener::~MessageListener()
 {
 	if (m_msgBus != nullptr)
@@ -144,6 +158,29 @@ Magma::MessageBus::~MessageBus()
 	free(m_messageBuffer);
 }
 
+void Magma::MessageBus::SendMessage(size_t type, const std::string & typeName, std::istream & is)
+{
+	m_messagesMutex.lock();
+	char* loc = this->AllocateMessage();
+	if (loc == nullptr)
+	{
+		MAGMA_ERROR("Failed to send message in MessageBus, message allocation returned nullptr");
+		m_messagesMutex.unlock();
+	}
+
+	Message* msg = Message::Create(typeName, loc, is);
+	if (msg == nullptr)
+	{
+		MAGMA_ERROR("Failed to send message in MessageBus, unknown message data type \"" + typeName + "\"");
+		m_messagesMutex.unlock();
+	}
+
+	msg->m_type = type;
+	this->SendMessage(msg);
+
+	m_messagesMutex.unlock();
+}
+
 void Magma::MessageBus::Clean()
 {
 	std::lock_guard<std::mutex> _lockguard(m_messagesMutex);
@@ -195,4 +232,24 @@ char * Magma::MessageBus::AllocateMessage()
 			return &m_messageBuffer[i * m_messageMaxSize];
 	MAGMA_ERROR("Failed to allocate message on MessageBus, the message buffer is full");
 	return nullptr;
+}
+
+void Magma::StringMessage::Serialize(std::ostream & stream) const
+{
+	stream << m_value << '\\' << '#';
+}
+
+void Magma::StringMessage::Deserialize(std::istream & stream)
+{
+	m_value = "";
+	while (stream.peek() != std::istream::traits_type::eof())
+	{
+		auto now = stream.get();
+		auto next = stream.peek();
+
+		if (now == '\\' && next == '#')
+			break;
+		else
+			m_value += now;
+	}
 }

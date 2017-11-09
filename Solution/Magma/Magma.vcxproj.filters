@@ -13,6 +13,9 @@
     <Filter Include="Systems\Terminal">
       <UniqueIdentifier>{6912e674-ce20-422f-aaa3-15ee68284af2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Systems\Core">
+      <UniqueIdentifier>{eaba601c-7f7b-417b-8db0-ab1791fabc9c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Magma\Utils\Utils.hpp">
@@ -36,6 +39,15 @@
     <ClInclude Include="src\Magma\Systems\MessageBus.hpp">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="src\Magma\Utils\Registrable.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Magma\Utils\RegistrableRegistry.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Magma\Systems\Core\Core.hpp">
+      <Filter>Systems\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Magma\Utils\Utils.cpp">
@@ -49,6 +61,10 @@
     </ClCompile>
     <ClCompile Include="src\Magma\Systems\MessageBus.cpp">
       <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Magma\Systems\Core\Core.cpp" />
+    <ClCompile Include="src\Magma\Systems\Terminal\Terminal.cpp">
+      <Filter>Systems\Terminal</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
