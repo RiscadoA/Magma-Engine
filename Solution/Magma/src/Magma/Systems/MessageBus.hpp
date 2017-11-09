@@ -11,6 +11,7 @@
 
 #include "..\Utils\Utils.hpp"
 #include "..\Utils\Serializable.hpp"
+#include "..\Utils\Math.hpp"
 
 namespace Magma
 {
@@ -390,6 +391,45 @@ namespace Magma
 		inline virtual void Deserialize(std::istream & stream) { stream >> m_value; };
 	};
 	MAGMA_REGISTER_MESSAGE(RealMessage, "real");
+	/// <summary>
+	///		Message containing a 2D vector
+	/// </summary>
+	class Vector2Message final : public Message
+	{
+	public:
+		glm::vec2 m_value;
+	private:
+		// Inherited via Message
+		inline virtual void Serialize(std::ostream & stream) const { stream << m_value.x << " " << m_value.y << " "; };
+		inline virtual void Deserialize(std::istream & stream) { stream >> m_value.x >> m_value.y; };
+	};
+	MAGMA_REGISTER_MESSAGE(Vector2Message, "vector2");
+	/// <summary>
+	///		Message containing a 2D vector
+	/// </summary>
+	class Vector3Message final : public Message
+	{
+	public:
+		glm::vec3 m_value;
+	private:
+		// Inherited via Message
+		inline virtual void Serialize(std::ostream & stream) const { stream << m_value.x << " " << m_value.y << " " << m_value.z << " "; };
+		inline virtual void Deserialize(std::istream & stream) { stream >> m_value.x >> m_value.y >> m_value.z; };
+	};
+	MAGMA_REGISTER_MESSAGE(Vector3Message, "vector3");
+	/// <summary>
+	///		Message containing a 2D vector
+	/// </summary>
+	class Vector4Message final : public Message
+	{
+	public:
+		glm::vec4 m_value;
+	private:
+		// Inherited via Message
+		inline virtual void Serialize(std::ostream & stream) const { stream << m_value.x << " " << m_value.y << " " << m_value.z << " " << m_value.w << " "; };
+		inline virtual void Deserialize(std::istream & stream) { stream >> m_value.x >> m_value.y >> m_value.z >> m_value.w; };
+	};
+	MAGMA_REGISTER_MESSAGE(Vector4Message, "vector4");
 	/// <summary>
 	///		Message containing string
 	/// </summary>
