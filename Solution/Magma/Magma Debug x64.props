@@ -9,12 +9,12 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Lib>
-      <AdditionalDependencies>glfw3.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32d.lib;libglew32d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\Magma\extern\lib\d</AdditionalLibraryDirectories>
     </Lib>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\Magma\extern\lib\d</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32d.lib;libglew32d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />

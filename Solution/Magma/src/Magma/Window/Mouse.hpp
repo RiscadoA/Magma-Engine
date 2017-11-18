@@ -13,7 +13,7 @@ namespace Magma
 		/// <summary>
 		///		Mouse buttons
 		/// </summary>
-		enum class Button
+		enum class Button : int32_t
 		{
 			Invalid = -1,	// Invalid mouse button
 
@@ -29,7 +29,7 @@ namespace Magma
 		/// <summary>
 		///		Mouse wheels
 		/// </summary>
-		enum class Wheel
+		enum class Wheel : int32_t
 		{
 			Invalid = -1,	// Invalid mouse wheel
 

@@ -72,6 +72,15 @@
     <ClInclude Include="src\Magma\Window\Window.hpp">
       <Filter>Window</Filter>
     </ClInclude>
+    <ClInclude Include="src\Magma\Systems\Input\Input.hpp">
+      <Filter>Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Magma\Utils\INIDocument.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Magma\Utils\XMLDocument.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Magma\Utils\Utils.cpp">
@@ -107,6 +116,15 @@
     </ClCompile>
     <ClCompile Include="src\Magma\Window\Window.cpp">
       <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Magma\Systems\Input\Input.cpp">
+      <Filter>Systems\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Magma\Utils\INIDocument.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Magma\Utils\XMLDocument.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

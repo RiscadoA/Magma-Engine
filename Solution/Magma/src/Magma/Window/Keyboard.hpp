@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 namespace Magma
 {
 	/// <summary>
@@ -11,7 +13,7 @@ namespace Magma
 		/// <summary>
 		///		Keyboard key codes
 		/// </summary>
-		enum class Key
+		enum class Key : int32_t
 		{
 			Invalid = -1,	// Invalid key
 

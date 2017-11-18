@@ -22,14 +22,22 @@ void Magma::GLFWWindow::GLFWKeyCallback(GLFWwindow* window, int key, int scancod
 		if (win->m_glfwWindow != window)
 			MAGMA_WARNING("GLFW callback window doesn't correspond to active window");
 		UIEvent event;
-		event.type = (action == GLFW_PRESS) ? UIEvent::Type::KeyPressed : UIEvent::Type::KeyReleased;
+		if (action == GLFW_PRESS)
+			event.type = UIEvent::Type::KeyPressed;
+		else if (action == GLFW_RELEASE)
+			event.type = UIEvent::Type::KeyReleased;
+		else
+			return;
 		event.key.code = GLFWWindow::GLFWKeyToMagma(key);
 		event.key.shift = (mods & GLFW_MOD_SHIFT) != 0;
 		event.key.control = (mods & GLFW_MOD_CONTROL) != 0;
 		event.key.alt = (mods & GLFW_MOD_ALT) != 0;
 		win->m_eventQueue.push(event);
 		if (event.key.code != Magma::Keyboard::Key::Invalid)
-			win->m_keyboardKeyStates[static_cast<size_t>(event.key.code)] = (action == GLFW_PRESS);
+			if (action == GLFW_PRESS)
+				win->m_keyboardKeyStates[static_cast<size_t>(event.key.code)] = true;
+			else if (action == GLFW_RELEASE)
+				win->m_keyboardKeyStates[static_cast<size_t>(event.key.code)] = false;
 	}
 }
 
@@ -43,14 +51,22 @@ void Magma::GLFWWindow::GLFWMouseButtonCallback(GLFWwindow* window, int button, 
 		if (win->m_glfwWindow != window)
 			MAGMA_WARNING("GLFW callback window doesn't correspond to active window");
 		UIEvent event;
-		event.type = action == GLFW_PRESS ? UIEvent::Type::MouseButtonPressed : UIEvent::Type::MouseButtonReleased;
+		if (action == GLFW_PRESS)
+			event.type = UIEvent::Type::MouseButtonPressed;
+		else if (action == GLFW_RELEASE)
+			event.type = UIEvent::Type::MouseButtonReleased;
+		else
+			return;
 		event.mouseButton.button = GLFWWindow::GLFWMButtonToMagma(button);
 		auto mPos = win->GetMousePosition();
 		event.mouseButton.x = mPos.x;
 		event.mouseButton.y = mPos.y;
 		win->m_eventQueue.push(event);
 		if (event.mouseButton.button != Magma::Mouse::Button::Invalid)
-			win->m_mouseButtonStates[static_cast<size_t>(event.mouseButtonPressed.button)] = (action == GLFW_PRESS);
+			if (action == GLFW_PRESS)
+				win->m_mouseButtonStates[static_cast<size_t>(event.mouseButtonPressed.button)] = true;
+			else if (action == GLFW_RELEASE)
+				win->m_mouseButtonStates[static_cast<size_t>(event.mouseButtonPressed.button)] = false;
 	}
 }
 
