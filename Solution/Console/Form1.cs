@@ -57,7 +57,7 @@ namespace Console {
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
             if (server.IsConnected)
-                Send("exit");
+                Send("/exit");
         }
 
         // Execute message

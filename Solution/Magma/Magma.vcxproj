@@ -24,11 +24,17 @@
     <ClInclude Include="src\Magma\Systems\Core\Core.hpp" />
     <ClInclude Include="src\Magma\Systems\MessageBus.hpp" />
     <ClInclude Include="src\Magma\Systems\Terminal\Terminal.hpp" />
+    <ClInclude Include="src\Magma\Utils\Globals.hpp" />
     <ClInclude Include="src\Magma\Utils\Math.hpp" />
     <ClInclude Include="src\Magma\Utils\Registrable.hpp" />
     <ClInclude Include="src\Magma\Utils\RegistrableRegistry.hpp" />
     <ClInclude Include="src\Magma\Utils\Serializable.hpp" />
     <ClInclude Include="src\Magma\Utils\Utils.hpp" />
+    <ClInclude Include="src\Magma\Window\GLFWWindow.hpp" />
+    <ClInclude Include="src\Magma\Window\Keyboard.hpp" />
+    <ClInclude Include="src\Magma\Window\Mouse.hpp" />
+    <ClInclude Include="src\Magma\Window\UIEvent.hpp" />
+    <ClInclude Include="src\Magma\Window\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Magma\Debug\Console.cpp" />
@@ -36,7 +42,13 @@
     <ClCompile Include="src\Magma\Systems\Core\Core.cpp" />
     <ClCompile Include="src\Magma\Systems\MessageBus.cpp" />
     <ClCompile Include="src\Magma\Systems\Terminal\Terminal.cpp" />
+    <ClCompile Include="src\Magma\Utils\Globals.cpp" />
     <ClCompile Include="src\Magma\Utils\Utils.cpp" />
+    <ClCompile Include="src\Magma\Window\GLFWWindow.cpp" />
+    <ClCompile Include="src\Magma\Window\Keyboard.cpp" />
+    <ClCompile Include="src\Magma\Window\Mouse.cpp" />
+    <ClCompile Include="src\Magma\Window\UIEvent.cpp" />
+    <ClCompile Include="src\Magma\Window\Window.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

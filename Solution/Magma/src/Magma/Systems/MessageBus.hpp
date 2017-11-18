@@ -443,4 +443,5 @@ namespace Magma
 		virtual void Deserialize(std::istream & stream) final;
 	};
 	MAGMA_REGISTER_MESSAGE(StringMessage, "string");
+
 }

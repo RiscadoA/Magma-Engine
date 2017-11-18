@@ -12,6 +12,10 @@
       <AdditionalDependencies>glfw3.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\Magma\extern\lib\r</AdditionalLibraryDirectories>
     </Lib>
+    <Link>
+      <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Programação\Ricardo\Magma-Engine\Solution\Magma\extern\lib\r;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>

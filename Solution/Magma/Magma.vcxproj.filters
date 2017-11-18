@@ -16,6 +16,12 @@
     <Filter Include="Systems\Core">
       <UniqueIdentifier>{eaba601c-7f7b-417b-8db0-ab1791fabc9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Systems\Input">
+      <UniqueIdentifier>{47202bd0-06f4-4180-a79b-abb27505b154}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window">
+      <UniqueIdentifier>{c4f1342c-cd61-4f8e-a645-1575c165ee06}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Magma\Utils\Utils.hpp">
@@ -48,6 +54,24 @@
     <ClInclude Include="src\Magma\Systems\Core\Core.hpp">
       <Filter>Systems\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Magma\Utils\Globals.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Magma\Window\GLFWWindow.hpp">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Magma\Window\Keyboard.hpp">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Magma\Window\Mouse.hpp">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Magma\Window\UIEvent.hpp">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Magma\Window\Window.hpp">
+      <Filter>Window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Magma\Utils\Utils.cpp">
@@ -65,6 +89,24 @@
     <ClCompile Include="src\Magma\Systems\Core\Core.cpp" />
     <ClCompile Include="src\Magma\Systems\Terminal\Terminal.cpp">
       <Filter>Systems\Terminal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Magma\Utils\Globals.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Magma\Window\GLFWWindow.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Magma\Window\Keyboard.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Magma\Window\Mouse.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Magma\Window\UIEvent.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Magma\Window\Window.cpp">
+      <Filter>Window</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
