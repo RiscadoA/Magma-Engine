@@ -66,7 +66,14 @@ namespace Magma
 		/// </summary>
 		/// <param name="name">Section's name</param>
 		/// <returns>Reference to section found</returns>
-		inline Section& GetSection(const std::string& name) { return m_sections[name]; }
+		inline Section& GetSection(const std::string& name) { return m_sections[name]; };
+
+		/// <summary>
+		///		Returns a reference to a section
+		/// </summary>
+		/// <param name="name">Section's name</param>
+		/// <returns>Reference to section found</returns>
+		inline const Section& GetSection(const std::string& name) const { return m_sections.at(name); };
 
 	private:
 		std::map<std::string, Section> m_sections;

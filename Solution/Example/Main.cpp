@@ -6,8 +6,11 @@
 #include <Magma\Systems\Core\Core.hpp>
 #include <Magma\Systems\Terminal\Terminal.hpp>
 #include <Magma\Systems\Input\Input.hpp>
+#include <Magma\Systems\Resources\ResourcesManager.hpp>
 #include <Magma\Utils\Globals.hpp>
 #include <Magma\Window\GLFWWindow.hpp>
+
+#include <Magma\Systems\Resources\TextResource.hpp>
 
 #include <algorithm>
 
@@ -23,9 +26,15 @@ int main(int argc, char** argv)
 	auto msgBus = std::make_shared<MessageBus>(128, 512);
 	auto core = std::make_shared<Core>();
 	auto terminal = std::make_shared<Terminal>();
+	auto rscManager = std::make_shared<ResourcesManager>();
 
 	core->Init(msgBus);
 	terminal->Init(msgBus);
+	rscManager->Init(msgBus);
+	rscManager->LoadInfo("..\\..\\Resources");
+
+	auto rsc = rscManager->Get("Test");
+	std::cout << rsc->As<TextResource>().Text() << std::endl;
 
 	Terminal::AddCommand("exit", [core](const std::vector<std::string>& arguments) { core->Terminate(); });
 	Terminal::AddCommand("send", [msgBus](const std::vector<std::string>& arguments)
@@ -138,9 +147,11 @@ int main(int argc, char** argv)
 	Terminal::RemoveCommand("send");
 	Terminal::RemoveCommand("exit");
 
+	rscManager->Terminate();
 	terminal->Terminate();
 	core->Terminate();
 
+	rscManager = nullptr;
 	terminal = nullptr;
 	core = nullptr;
 	msgBus = nullptr;

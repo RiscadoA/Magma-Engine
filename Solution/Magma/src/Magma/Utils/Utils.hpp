@@ -2,6 +2,11 @@
 
 #include <string>
 
+// Sets the verbosity of the debug logs outputted by the engine
+// 0 - None
+// 5 - All
+#define MAGMA_VERBOSITY 5
+
 namespace Magma
 {
 	/// <summary>

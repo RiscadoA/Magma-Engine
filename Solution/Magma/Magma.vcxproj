@@ -21,9 +21,14 @@
   <ItemGroup>
     <ClInclude Include="src\Magma\Debug\Console.hpp" />
     <ClInclude Include="src\Magma\Debug\WindowsConsole.hpp" />
+    <ClInclude Include="src\Magma\Graphics\Renderable.hpp" />
+    <ClInclude Include="src\Magma\Graphics\VertexArray.hpp" />
     <ClInclude Include="src\Magma\Systems\Core\Core.hpp" />
     <ClInclude Include="src\Magma\Systems\Input\Input.hpp" />
     <ClInclude Include="src\Magma\Systems\MessageBus.hpp" />
+    <ClInclude Include="src\Magma\Systems\Resources\Resource.hpp" />
+    <ClInclude Include="src\Magma\Systems\Resources\ResourcesManager.hpp" />
+    <ClInclude Include="src\Magma\Systems\Resources\TextResource.hpp" />
     <ClInclude Include="src\Magma\Systems\Terminal\Terminal.hpp" />
     <ClInclude Include="src\Magma\Utils\Globals.hpp" />
     <ClInclude Include="src\Magma\Utils\INIDocument.hpp" />
@@ -45,6 +50,9 @@
     <ClCompile Include="src\Magma\Systems\Core\Core.cpp" />
     <ClCompile Include="src\Magma\Systems\Input\Input.cpp" />
     <ClCompile Include="src\Magma\Systems\MessageBus.cpp" />
+    <ClCompile Include="src\Magma\Systems\Resources\Resource.cpp" />
+    <ClCompile Include="src\Magma\Systems\Resources\ResourcesManager.cpp" />
+    <ClCompile Include="src\Magma\Systems\Resources\TextResource.cpp" />
     <ClCompile Include="src\Magma\Systems\Terminal\Terminal.cpp" />
     <ClCompile Include="src\Magma\Utils\Globals.cpp" />
     <ClCompile Include="src\Magma\Utils\INIDocument.cpp" />
