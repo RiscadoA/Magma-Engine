@@ -33,9 +33,6 @@ int main(int argc, char** argv)
 	rscManager->Init(msgBus);
 	rscManager->LoadInfo("..\\..\\Resources");
 
-	auto rsc = rscManager->Get("Test");
-	std::cout << rsc->As<TextResource>().Text() << std::endl;
-
 	Terminal::AddCommand("exit", [core](const std::vector<std::string>& arguments) { core->Terminate(); });
 	Terminal::AddCommand("send", [msgBus](const std::vector<std::string>& arguments)
 	{
@@ -99,20 +96,7 @@ int main(int argc, char** argv)
 			}
 		}
 
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		glBegin(GL_QUADS);
-		if ((*input)["Horizontal"].Value() < 0.0f)
-			glColor3f(1.0f, 0.0f, 0.0f);
-		else if ((*input)["Horizontal"].Value() > 0.0f)
-			glColor3f(0.0f, 0.0f, 1.0f);
-		else
-			glColor3f(0.0f, 1.0f, 0.0f);
-		glVertex2f(-1.0f, 0.5f);
-		glVertex2f((*input)["Horizontal"].Value(), 0.5f);
-		glVertex2f((*input)["Horizontal"].Value(), 1.0f);
-		glVertex2f(-1.0f, 1.0f);
-		glEnd();
+		
 
 		terminal->Update();
 		core->Update();

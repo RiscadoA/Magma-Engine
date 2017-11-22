@@ -3,10 +3,11 @@
 namespace Magma
 {
 	/// <summary>
-	///		Renderable used to render vertex arrays
+	///		Abstract class for handling 2D textures
 	/// </summary>
-	class VertexArray
+	class Texture2D
 	{
 	public:
+
 	};
 }

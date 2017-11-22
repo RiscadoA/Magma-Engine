@@ -87,9 +87,6 @@
     <ClInclude Include="src\Magma\Utils\XMLDocument.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\Magma\Graphics\Renderable.hpp">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Magma\Graphics\VertexArray.hpp">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -101,6 +98,9 @@
     </ClInclude>
     <ClInclude Include="src\Magma\Systems\Resources\TextResource.hpp">
       <Filter>Systems\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Magma\Graphics\Texture2D.hpp">
+      <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

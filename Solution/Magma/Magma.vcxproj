@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClInclude Include="src\Magma\Debug\Console.hpp" />
     <ClInclude Include="src\Magma\Debug\WindowsConsole.hpp" />
-    <ClInclude Include="src\Magma\Graphics\Renderable.hpp" />
+    <ClInclude Include="src\Magma\Graphics\Texture2D.hpp" />
     <ClInclude Include="src\Magma\Graphics\VertexArray.hpp" />
     <ClInclude Include="src\Magma\Systems\Core\Core.hpp" />
     <ClInclude Include="src\Magma\Systems\Input\Input.hpp" />
