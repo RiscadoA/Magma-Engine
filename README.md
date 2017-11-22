@@ -4,7 +4,7 @@ Little open source engine I'm building on my free time.
 
 ## Goals
 
-* 3D graphics using OpenGL ([GLEW](https://github.com/nigels-com/glew) & [GLFW](https://github.com/glfw/glfw));
+* 3D graphics with support for both OpenGL ([GLEW](https://github.com/nigels-com/glew) & [GLFW](https://github.com/glfw/glfw)) and DirectX;
 * Game Object / Component system;
 * External console for debugging;
 * Physics using [Bullet Physics](https://github.com/bulletphysics/bullet3);
