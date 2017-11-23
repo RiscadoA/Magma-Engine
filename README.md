@@ -17,9 +17,9 @@ These instructions will get you a copy of the engine up and running on your loca
 
 ### Installing
 
-[CMake](cmake.org) is used to build this project.
+[CMake](https://cmake.org/) is used to build this project.
 
-If you're using Windows and you wish to use the Windows Forms console, you just need to copy its executable from win-forms-console/bin/Release to the place where you are running the engine.
+If you're using Windows and you wish to use the Windows Forms console, you will need to build the [windows forms project](https://github.com/RiscadoA/Magma-Engine/tree/master/win-forms-console) and copy the executable to the place where you are running the  engine.
 
 ## Authors
 
