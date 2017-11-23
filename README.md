@@ -11,6 +11,14 @@ Little open source engine I'm building on my free time.
 * Asset Conditioning Pipeline using [Assimp](https://github.com/assimp/assimp);
 * And many others...
 
+## Getting Started
+
+These instructions will get you a copy of the engine up and running on your local machine for development and testing purposes.
+
+### Installing
+
+[CMake](cmake.org) is used to build this project.
+
 ## Authors
 
 * **Ricardo Antunes** - [RiscadoA](https://github.com/RiscadoA)
