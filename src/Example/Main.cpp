@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 	core->Init(msgBus);
 	terminal->Init(msgBus);
 	rscManager->Init(msgBus);
-	rscManager->LoadInfo("..\\Resources");
+	rscManager->LoadInfo("..\\resources");
 
 	Terminal::AddCommand("exit", [core](const std::vector<std::string>& arguments) { core->Terminate(); });
 	Terminal::AddCommand("send", [msgBus](const std::vector<std::string>& arguments)
