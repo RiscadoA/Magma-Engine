@@ -22,4 +22,51 @@ namespace Magma
 
 		std::atomic<bool> m_running;
 	};
+
+	class Terminal;
+	class ResourcesManager;
+	class Input;
+
+	/// <summary>
+	///		Engine Locator. Stores pointers to engine systems.
+	/// </summary>
+	struct Locator
+	{
+		Locator() = default;
+		~Locator() = default;
+		// Delete copy constructor
+		Locator(const Locator&) = delete;
+		Locator& operator=(const Locator&) = delete;
+
+		/// <summary>
+		///		Engine message bus
+		/// </summary>
+		std::shared_ptr<MessageBus> msgBus;
+
+		/// <summary>
+		///		Engine core
+		/// </summary>
+		std::shared_ptr<Core> core;
+
+		/// <summary>
+		///		Engine terminal (executes commands from the console)
+		/// </summary>
+		std::shared_ptr<Terminal> terminal;
+
+		/// <summary>
+		///		Engine resources manager
+		/// </summary>
+		std::shared_ptr<ResourcesManager> resourcesManager;
+
+		/// <summary>
+		///		Engine input system
+		/// </summary>
+		std::shared_ptr<Input> input;
+	};
 }
+
+/// <summary>
+///		Magma custom init function.
+///		Called on engine startup.
+/// </summary>
+extern int MagmaMain(const Magma::Locator&);

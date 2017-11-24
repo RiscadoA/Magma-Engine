@@ -82,6 +82,7 @@ namespace Magma
 	class Input : public MessageListener, public Serializable
 	{
 	public:
+		inline std::shared_ptr<Window> GetWindow() const { return m_window; }
 		void SetWindow(std::shared_ptr<Magma::Window> window);
 
 		void Update(float deltaTime);

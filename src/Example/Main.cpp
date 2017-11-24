@@ -20,127 +20,68 @@
 
 using namespace Magma;
 
-int main(int argc, char** argv)
+int MagmaMain(const Locator& loc)
 {
-#ifdef _WINDOWS
-	Console::Init<WindowsConsole>();
-#endif
-	auto msgBus = std::make_shared<MessageBus>(128, 512);
-	auto core = std::make_shared<Core>();
-	auto terminal = std::make_shared<Terminal>();
-	auto rscManager = std::make_shared<ResourcesManager>();
-
-	core->Init(msgBus);
-	terminal->Init(msgBus);
-	rscManager->Init(msgBus);
-	rscManager->LoadInfo("..\\resources");
-
-	Terminal::AddCommand("exit", [core](const std::vector<std::string>& arguments) { core->Terminate(); });
-	Terminal::AddCommand("send", [msgBus](const std::vector<std::string>& arguments)
+	Terminal::AddCommand("exit", [&loc](const std::vector<std::string>& arguments) { loc.core->Terminate(); });
+	Terminal::AddCommand("send", [&loc](const std::vector<std::string>& arguments)
 	{
 		if (arguments.size() == 1)
 		{
-			msgBus->SendMessage(arguments[0], "empty", std::cin);
+			loc.msgBus->SendMessage(arguments[0], "empty", std::cin);
 		}
 		else if (arguments.size() == 2)
 		{
-			msgBus->SendMessage(arguments[0], arguments[1], std::cin);
+			loc.msgBus->SendMessage(arguments[0], arguments[1], std::cin);
 		}
 		else MAGMA_WARNING("Failed to execute command \"send\", invalid number of arguments, 1/2 expected (message type, data type {default empty})");
 	});
 
-	auto window = std::shared_ptr<Window>(new GLFWWindow());
-	auto input = std::make_shared<Input>();
-	input->SetWindow(window);
-	input->Init(msgBus);
-
 	glewInit();
-
-	{
-		std::ifstream ifs("config");
-		if (ifs.is_open())
-		{
-			ifs >> *window;
-		}
-		ifs.close();
-	}
-
-	window->Open();
-	window->SetVSyncEnabled(true);
 
 	{
 		std::ifstream ifs("keybinds.xml");
 		if (ifs.is_open())
 		{
-			ifs >> *input;
+			ifs >> *loc.input;
 		}
 		ifs.close();
 	}
 
-	(*input)["Horizontal"].SetNegativeKey(Keyboard::Key::A);
-	(*input)["Horizontal"].SetPositiveKey(Keyboard::Key::D);
-	(*input)["Horizontal"].SetSpeed(1.5f);
+	(*loc.input)["Horizontal"].SetNegativeKey(Keyboard::Key::A);
+	(*loc.input)["Horizontal"].SetPositiveKey(Keyboard::Key::D);
+	(*loc.input)["Horizontal"].SetSpeed(1.5f);
 
-	(*input)["Vertical"].SetNegativeKey(Keyboard::Key::W);
-	(*input)["Vertical"].SetPositiveKey(Keyboard::Key::S);
-	(*input)["Vertical"].SetSpeed(1.5f);
+	(*loc.input)["Vertical"].SetNegativeKey(Keyboard::Key::W);
+	(*loc.input)["Vertical"].SetPositiveKey(Keyboard::Key::S);
+	(*loc.input)["Vertical"].SetSpeed(1.5f);
 
-	while (core->IsRunning() && window->IsOpen())
+	while (loc.core->IsRunning() && loc.input->GetWindow()->IsOpen())
 	{
 		UIEvent event;
-		while (window->PollEvent(event))
+		while (loc.input->GetWindow()->PollEvent(event))
 		{
 			switch (event.type)
 			{
 				case UIEvent::Type::Closed:
-					window->Close();
+					loc.input->GetWindow()->Close();
+					break;
+				default:
+					std::cout << event << std::endl;
 					break;
 			}
 		}
 
 		
 
-		terminal->Update();
-		core->Update();
-		input->Update(1.0f / 60.0f);
+		loc.terminal->Update();
+		loc.core->Update();
+		loc.input->Update(1.0f / 60.0f);
 
-		window->Display();
+		loc.input->GetWindow()->Display();
 	}
-	
-	{
-		std::ofstream ofs("keybinds.xml");
-		if (ofs.is_open())
-		{
-			ofs << *input << std::endl;
-		}
-		ofs.close();
-	}
-
-	{
-		std::ofstream ofs("config");
-		if (ofs.is_open())
-		{
-			ofs << *window << std::endl;
-		}
-		ofs.close();
-	}
-
-	input->Terminate();
-	input = nullptr;
-	window->Close();
-	window = nullptr;
 
 	Terminal::RemoveCommand("send");
 	Terminal::RemoveCommand("exit");
-
-	rscManager->Terminate();
-	terminal->Terminate();
-	core->Terminate();
-
-	rscManager = nullptr;
-	terminal = nullptr;
-	core = nullptr;
-	msgBus = nullptr;
 
 	return 0;
 }

@@ -22,3 +22,62 @@ void Magma::Core::DerivedTerminate()
 {
 	m_running = false;
 }
+
+using namespace Magma;
+
+#include "..\Terminal\Terminal.hpp"
+#include "..\Input\Input.hpp"
+#include "..\Resources\ResourcesManager.hpp"
+
+#ifdef MAGMA_IS_WINDOWS
+#include "..\..\Debug\WindowsConsole.hpp"
+#endif
+
+#ifdef MAGMA_USING_DIRECTX
+#include "..\..\Window\Win32Window.hpp"
+int WINAPI WinMain(HINSTANCE hInstance,
+				   HINSTANCE hPrevInstance,
+				   LPSTR lpCmdLine,
+				   int nCmdShow)
+#else
+#include "..\..\Window\GLFWWindow.hpp"
+int main()
+#endif
+{
+#ifdef MAGMA_IS_WINDOWS
+	Console::Init<WindowsConsole>();
+#endif
+
+	Locator locator;
+
+	locator.msgBus = std::make_shared<MessageBus>(128, 512);
+	locator.core = std::make_shared<Core>();
+	locator.terminal = std::make_shared<Terminal>();
+	locator.resourcesManager = std::make_shared<ResourcesManager>();
+	locator.input = std::make_shared<Input>();
+
+	locator.core->Init(locator.msgBus);
+	locator.terminal->Init(locator.msgBus);
+	// Init resources manager + load resources info
+	locator.resourcesManager->Init(locator.msgBus);
+	locator.resourcesManager->LoadInfo("..\resources");
+	// Open window and init input system
+#ifdef MAGMA_USING_DIRECTX
+	std::shared_ptr<Window> win = std::make_shared<Win32Window>(hInstance, nCmdShow);
+#else
+	std::shared_ptr<Window> win = std::make_shared<GLFWWindow>();
+#endif
+	win->Open();
+	locator.input->SetWindow(win);
+	locator.input->Init(locator.msgBus);
+
+	int returnCode = MagmaMain(locator);
+
+	locator.input->Terminate();
+	win->Close();
+	locator.resourcesManager->Terminate();
+	locator.terminal->Terminate();
+	locator.core->Terminate();
+
+	return returnCode;
+}
