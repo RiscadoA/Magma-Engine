@@ -56,9 +56,10 @@ int MagmaMain(const Locator& loc)
 	VertexShader* vertexShader = loc.renderDevice->CreateVertexShader(
 		"#version 410 core\n"
 		"layout (location = 0) in vec3 vertPos;\n"
+		"uniform float scale;\n"
 		"void main()\n"
 		"{\n"
-		"   gl_Position = vec4(vertPos.x, vertPos.y, vertPos.z, 1.0);\n"
+		"   gl_Position = vec4(vertPos.x * scale, vertPos.y * scale, vertPos.z * scale, 1.0);\n"
 		"}"
 	);
 
@@ -89,6 +90,9 @@ int MagmaMain(const Locator& loc)
 
 	VertexArray *vertexArray = loc.renderDevice->CreateVertexArray(1, &vertexBuffer, &vertexDescription);
 
+	float scale = 0.0f;
+	bool scaleUp = true;
+
 	while (loc.core->IsRunning() && loc.window->IsOpen())
 	{
 		UIEvent event;
@@ -111,6 +115,20 @@ int MagmaMain(const Locator& loc)
 		loc.renderDevice->SetPipeline(pipeline);
 		loc.renderDevice->SetVertexArray(vertexArray);
 		loc.renderDevice->DrawTriangles(0, 3);
+
+		pipeline->GetParam("scale")->SetAsFloat(scale);
+		if (scaleUp)
+		{
+			scale += 1.0f / 60.0f;
+			if (scale >= 2.0f)
+				scaleUp = false;
+		}
+		else
+		{
+			scale -= 1.0f / 60.0f;
+			if (scale <= 0.0f)
+				scaleUp = true;
+		}
 
 		loc.window->Display();
 	}
