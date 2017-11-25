@@ -9,6 +9,7 @@
 #include <Magma\Systems\Resources\ResourcesManager.hpp>
 #include <Magma\Utils\Globals.hpp>
 #include <Magma\Window\GLFWWindow.hpp>
+#include <Magma\Graphics\RenderDevice.hpp>
 
 #include <Magma\Systems\Resources\TextResource.hpp>
 
@@ -16,7 +17,6 @@
 
 #include <filesystem>
 
-#include <GL\glew.h>
 
 using namespace Magma;
 
@@ -36,8 +36,6 @@ int MagmaMain(const Locator& loc)
 		else MAGMA_WARNING("Failed to execute command \"send\", invalid number of arguments, 1/2 expected (message type, data type {default empty})");
 	});
 
-	glewInit();
-
 	{
 		std::ifstream ifs("keybinds.xml");
 		if (ifs.is_open())
@@ -55,29 +53,25 @@ int MagmaMain(const Locator& loc)
 	(*loc.input)["Vertical"].SetPositiveKey(Keyboard::Key::S);
 	(*loc.input)["Vertical"].SetSpeed(1.5f);
 
-	while (loc.core->IsRunning() && loc.input->GetWindow()->IsOpen())
+	while (loc.core->IsRunning() && loc.window->IsOpen())
 	{
 		UIEvent event;
-		while (loc.input->GetWindow()->PollEvent(event))
+		while (loc.window->PollEvent(event))
 		{
 			switch (event.type)
 			{
 				case UIEvent::Type::Closed:
-					loc.input->GetWindow()->Close();
-					break;
-				default:
-					std::cout << event << std::endl;
+					loc.window->Close();
 					break;
 			}
 		}
-
-		
 
 		loc.terminal->Update();
 		loc.core->Update();
 		loc.input->Update(1.0f / 60.0f);
 
-		loc.input->GetWindow()->Display();
+		loc.renderDevice->Clear(0.1f, 0.2f, 0.3f);
+		loc.window->Display();
 	}
 
 	Terminal::RemoveCommand("send");

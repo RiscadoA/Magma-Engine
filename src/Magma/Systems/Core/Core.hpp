@@ -26,6 +26,8 @@ namespace Magma
 	class Terminal;
 	class ResourcesManager;
 	class Input;
+	class Window;
+	class RenderDevice;
 
 	/// <summary>
 	///		Engine Locator. Stores pointers to engine systems.
@@ -62,6 +64,16 @@ namespace Magma
 		///		Engine input system
 		/// </summary>
 		std::shared_ptr<Input> input;
+		
+		/// <summary>
+		///		Engine window
+		/// </summary>
+		std::shared_ptr<Window> window;
+
+		/// <summary>
+		///		Engine render device
+		/// </summary>
+		std::shared_ptr<RenderDevice> renderDevice;
 	};
 }
 

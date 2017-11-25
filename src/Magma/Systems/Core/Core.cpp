@@ -41,6 +41,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 				   int nCmdShow)
 #else
 #include "..\..\Window\GLFWWindow.hpp"
+#include "..\..\Graphics\OpenGLRenderDevice.hpp"
 int main()
 #endif
 {
@@ -63,18 +64,20 @@ int main()
 	locator.resourcesManager->LoadInfo("..\resources");
 	// Open window and init input system
 #ifdef MAGMA_USING_DIRECTX
-	std::shared_ptr<Window> win = std::make_shared<Win32Window>(hInstance, nCmdShow);
+	locator.window = std::make_shared<Win32Window>(hInstance, nCmdShow);
+	locator.window->Open();
 #else
-	std::shared_ptr<Window> win = std::make_shared<GLFWWindow>();
+	locator.window = std::make_shared<GLFWWindow>();
+	locator.window->Open();
+	locator.renderDevice = std::make_shared<OpenGLRenderDevice>();
 #endif
-	win->Open();
-	locator.input->SetWindow(win);
+	locator.input->SetWindow(locator.window);
 	locator.input->Init(locator.msgBus);
 
 	int returnCode = MagmaMain(locator);
 
 	locator.input->Terminate();
-	win->Close();
+	locator.window->Close();
 	locator.resourcesManager->Terminate();
 	locator.terminal->Terminate();
 	locator.core->Terminate();
