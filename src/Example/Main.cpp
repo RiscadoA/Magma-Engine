@@ -53,6 +53,42 @@ int MagmaMain(const Locator& loc)
 	(*loc.input)["Vertical"].SetPositiveKey(Keyboard::Key::S);
 	(*loc.input)["Vertical"].SetSpeed(1.5f);
 
+	VertexShader* vertexShader = loc.renderDevice->CreateVertexShader(
+		"#version 410 core\n"
+		"layout (location = 0) in vec3 vertPos;\n"
+		"void main()\n"
+		"{\n"
+		"   gl_Position = vec4(vertPos.x, vertPos.y, vertPos.z, 1.0);\n"
+		"}"
+	);
+
+	PixelShader* pixelShader = loc.renderDevice->CreatePixelShader(
+		"#version 410 core\n"
+		"out vec4 fragColor;\n"
+		"void main()\n"
+		"{\n"
+		"   fragColor = vec4(1.0f, 0.5f, 0.0f, 1.0f);\n"
+		"}"
+	);
+
+	Pipeline* pipeline = loc.renderDevice->CreatePipeline(vertexShader, pixelShader);
+
+	loc.renderDevice->DestroyVertexShader(vertexShader);
+	loc.renderDevice->DestroyPixelShader(pixelShader);
+
+	float vertices[] = {
+		-0.5f, -0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		0.0f,  0.5f, 0.0f
+	};
+
+	VertexBuffer *vertexBuffer = loc.renderDevice->CreateVertexBuffer(sizeof(vertices), vertices);
+
+	VertexElement vertexElement = { 0, VertexElementType::Float, 3, 0, 0, };
+	VertexDescription *vertexDescription = loc.renderDevice->CreateVertexDescription(1, &vertexElement);
+
+	VertexArray *vertexArray = loc.renderDevice->CreateVertexArray(1, &vertexBuffer, &vertexDescription);
+
 	while (loc.core->IsRunning() && loc.window->IsOpen())
 	{
 		UIEvent event;
@@ -71,8 +107,18 @@ int MagmaMain(const Locator& loc)
 		loc.input->Update(1.0f / 60.0f);
 
 		loc.renderDevice->Clear(0.1f, 0.2f, 0.3f);
+
+		loc.renderDevice->SetPipeline(pipeline);
+		loc.renderDevice->SetVertexArray(vertexArray);
+		loc.renderDevice->DrawTriangles(0, 3);
+
 		loc.window->Display();
 	}
+
+	loc.renderDevice->DestroyVertexArray(vertexArray);
+	loc.renderDevice->DestroyVertexDescription(vertexDescription);
+	loc.renderDevice->DestroyVertexBuffer(vertexBuffer);
+	loc.renderDevice->DestroyPipeline(pipeline);
 
 	Terminal::RemoveCommand("send");
 	Terminal::RemoveCommand("exit");
