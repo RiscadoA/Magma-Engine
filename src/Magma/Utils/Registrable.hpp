@@ -25,6 +25,15 @@ namespace Magma
 		/// </summary>
 		/// <param name="registrable">Class object to destroy</param>
 		static void Destroy(const BaseType* registrable);
+
+		/// <summary>
+		///		Returns this object type name
+		/// </summary>
+		/// <returns></returns>
+		inline const std::string& GetTypeName() const { return m_type; }
+
+	private:
+		std::string m_type;
 	};
 
 	template<typename BaseType>
@@ -37,6 +46,8 @@ namespace Magma
 			return nullptr; // No registrable was registred with this name
 
 		::Magma::registrable::detail::CreateRegistrableFunc<BaseType> func = it->second;
+		auto t = func();
+		t->m_type = typeName;
 		return func();
 	}
 
