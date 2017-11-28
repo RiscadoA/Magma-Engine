@@ -15,8 +15,14 @@ namespace Magma
 		Scene();
 		~Scene();
 
+		/// <summary>
+		///		Gets this scene root node
+		/// </summary>
+		/// <returns>Scene root node</returns>
+		inline std::shared_ptr<SceneNode> GetRoot() { m_root; }
+
 	private:
-		SceneNode* m_root;
+		std::shared_ptr<SceneNode> m_root;
 
 		// Inherited via Serializable
 		virtual void Serialize(std::ostream & stream) const override;
