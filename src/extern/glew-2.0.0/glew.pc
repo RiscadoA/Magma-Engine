@@ -1,6 +1,6 @@
-prefix=C:/Program Files/Magma-Engine
+prefix=C:/Program Files (x86)/Magma-Engine
 exec_prefix=${prefix}
-libdir=C:/Program Files/Magma-Engine/lib
+libdir=C:/Program Files (x86)/Magma-Engine/lib
 includedir=${prefix}/include
 
 Name: glew

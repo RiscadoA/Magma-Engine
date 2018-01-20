@@ -1,3 +1,0 @@
-[submodule "src/extern/selene"]
-	path = src/extern/selene
-	url = https://github.com/jeremyong/Selene
