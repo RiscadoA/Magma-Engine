@@ -27,5 +27,9 @@ namespace Magma
 		// Inherited via Serializable
 		virtual void Serialize(std::ostream & stream) const override;
 		virtual void Deserialize(std::istream & stream) override;
+
+		// Inherited via MessageListener
+		virtual void DerivedInit() override;
+		virtual void DerivedTerminate() override;
 	};
 }

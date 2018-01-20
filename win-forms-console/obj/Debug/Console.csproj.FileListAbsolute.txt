@@ -1,0 +1,10 @@
+D:\Programming\Engines\Magma-Engine\win-forms-console\bin\Debug\Console.exe.config
+D:\Programming\Engines\Magma-Engine\win-forms-console\bin\Debug\Console.exe
+D:\Programming\Engines\Magma-Engine\win-forms-console\bin\Debug\Console.pdb
+D:\Programming\Engines\Magma-Engine\win-forms-console\obj\Debug\Console.csprojResolveAssemblyReference.cache
+D:\Programming\Engines\Magma-Engine\win-forms-console\obj\Debug\Console.Form1.resources
+D:\Programming\Engines\Magma-Engine\win-forms-console\obj\Debug\Console.Properties.Resources.resources
+D:\Programming\Engines\Magma-Engine\win-forms-console\obj\Debug\Console.csproj.GenerateResource.Cache
+D:\Programming\Engines\Magma-Engine\win-forms-console\obj\Debug\Console.csproj.CoreCompileInputs.cache
+D:\Programming\Engines\Magma-Engine\win-forms-console\obj\Debug\Console.exe
+D:\Programming\Engines\Magma-Engine\win-forms-console\obj\Debug\Console.pdb

@@ -19,3 +19,13 @@ void Magma::Scene::Deserialize(std::istream & stream)
 {
 	stream >> *m_root;
 }
+
+void Magma::Scene::DerivedInit()
+{
+
+}
+
+void Magma::Scene::DerivedTerminate()
+{
+
+}

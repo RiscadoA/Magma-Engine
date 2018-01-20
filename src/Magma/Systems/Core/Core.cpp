@@ -28,6 +28,7 @@ using namespace Magma;
 #include "..\Terminal\Terminal.hpp"
 #include "..\Input\Input.hpp"
 #include "..\Resources\ResourcesManager.hpp"
+#include "..\Scene\Scene.hpp"
 
 #ifdef MAGMA_IS_WINDOWS
 #include "..\..\Debug\WindowsConsole.hpp"
@@ -56,12 +57,13 @@ int main()
 	locator.terminal = std::make_shared<Terminal>();
 	locator.resourcesManager = std::make_shared<ResourcesManager>();
 	locator.input = std::make_shared<Input>();
+	locator.scene = std::make_shared<Scene>();
 
 	locator.core->Init(locator.msgBus);
 	locator.terminal->Init(locator.msgBus);
 	// Init resources manager + load resources info
 	locator.resourcesManager->Init(locator.msgBus);
-	locator.resourcesManager->LoadInfo("..\resources");
+	locator.resourcesManager->LoadInfo(MAGMA_RESOURCES_PATH);
 	// Open window and init input system
 #ifdef MAGMA_USING_DIRECTX
 	locator.window = std::make_shared<Win32Window>(hInstance, nCmdShow);
@@ -73,14 +75,42 @@ int main()
 #endif
 	locator.input->SetWindow(locator.window);
 	locator.input->Init(locator.msgBus);
+	// Init scene
+	locator.scene->Init(locator.msgBus);
 
-	int returnCode = MagmaMain(locator);
+	MagmaInit(locator);
 
+	locator.window->SetVSyncEnabled(true);
+	while (locator.core->IsRunning() && locator.window->IsOpen())
+	{
+		UIEvent event;
+		while (locator.window->PollEvent(event))
+		{
+			switch (event.type)
+			{
+				case UIEvent::Type::Closed:
+					locator.window->Close();
+					break;
+			}
+		}
+
+		locator.terminal->Update();
+		locator.core->Update();
+		locator.input->Update(1.0f / 60.0f);
+
+		MagmaUpdate(locator, 1.0f / 60.0f);
+
+		locator.window->Display();
+	}
+
+	MagmaTerminate(locator);
+
+	locator.scene->Terminate();
 	locator.input->Terminate();
 	locator.window->Close();
 	locator.resourcesManager->Terminate();
 	locator.terminal->Terminate();
 	locator.core->Terminate();
 
-	return returnCode;
+	return 0;
 }

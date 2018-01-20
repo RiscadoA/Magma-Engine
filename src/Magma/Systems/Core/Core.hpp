@@ -28,6 +28,7 @@ namespace Magma
 	class Input;
 	class Window;
 	class RenderDevice;
+	class Scene;
 
 	/// <summary>
 	///		Engine Locator. Stores pointers to engine systems.
@@ -74,6 +75,11 @@ namespace Magma
 		///		Engine render device
 		/// </summary>
 		std::shared_ptr<RenderDevice> renderDevice;
+
+		/// <summary>
+		///		Engine scene
+		/// </summary>
+		std::shared_ptr<Scene> scene;
 	};
 }
 
@@ -81,4 +87,16 @@ namespace Magma
 ///		Magma custom init function.
 ///		Called on engine startup.
 /// </summary>
-extern int MagmaMain(const Magma::Locator&);
+extern void MagmaInit(const Magma::Locator&);
+
+/// <summary>
+///		Magma custom update function.
+///		Called on engine update.
+/// </summary>
+extern void MagmaUpdate(const Magma::Locator&, float deltaTime);
+
+/// <summary>
+///		Magma custom init function.
+///		Called on engine termination.
+/// </summary>
+extern void MagmaTerminate(const Magma::Locator&);
